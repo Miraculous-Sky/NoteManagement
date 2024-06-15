@@ -1,31 +1,37 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Label from "../models/label";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 
 interface LabelItemProps {
-    label: Label;
-    onPress: () => void;
+    label: string;
+    onPress?: () => void;
+    style?: {};
+    size?: number;
 }
 
-const LabelItem: React.FC<LabelItemProps> = ({ label, onPress }) => {
+const LabelItem: React.FC<LabelItemProps> = ({
+    label,
+    onPress,
+    style,
+    size = 12,
+}) => {
     return (
-        <TouchableOpacity style={styles.item} onPress={onPress}>
-            <Text style={styles.itemText}>{label.label}</Text>
+        <TouchableOpacity style={[styles.item, style]} onPress={onPress}>
+            <Text style={[styles.itemText, { fontSize: size }]}>{label}</Text>
         </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     item: {
-        padding: 10,
-        marginVertical: 5,
-        backgroundColor: "#fff",
-        borderColor: "#ddd",
-        borderWidth: 1,
+        margin: 5,
+        marginStart: 0,
+        padding: 5,
+        backgroundColor: "#dbdbdb",
         borderRadius: 5,
+        textAlign: "center",
     },
     itemText: {
-        fontSize: 16,
+        fontSize: 12,
     },
 });
 

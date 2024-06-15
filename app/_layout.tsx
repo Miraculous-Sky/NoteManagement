@@ -6,31 +6,31 @@ export default function Layout() {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <Drawer>
                 <Drawer.Screen
-                    name="index"
+                    name="(notes)"
                     options={{
                         drawerLabel: "Home",
-                        title: "overview",
+                        title: "Notes",
                     }}
                 />
                 <Drawer.Screen
                     name="labels"
                     options={{
                         drawerLabel: "Labels",
-                        title: "overview",
+                        title: "Labels",
                     }}
                 />
                 <Drawer.Screen
                     name="folders"
                     options={{
                         drawerLabel: "Folders",
-                        title: "overview",
+                        title: "Folders",
                     }}
                 />
                 <Drawer.Screen
                     name="trash"
                     options={{
                         drawerLabel: "Trash",
-                        title: "overview",
+                        title: "Trash",
                     }}
                 />
             </Drawer>

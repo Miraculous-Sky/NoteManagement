@@ -1,7 +1,17 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Link } from "expo-router";
-import Note from "../models/note";
+import React, { useEffect, useState } from "react";
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    ScrollView,
+} from "react-native";
+import Note from "@/models/note";
+import { formatTimeDuration } from "@/utils/date-utils";
+import { Ionicons } from "@expo/vector-icons";
+import localStorage from "@/data/local-storage";
+import LabelItem from "./label-item";
+import ColorItem from "./color-item";
 
 interface NoteItemProps {
     note: Note;
@@ -9,12 +19,62 @@ interface NoteItemProps {
 }
 
 const NoteItem: React.FC<NoteItemProps> = ({ note, onPress }) => {
+    const [labels, setLabels] = useState<{ [key: string]: string }>({});
+
+    useEffect(() => {
+        const fetchNoteAndLabels = async () => {
+            const fetchedLabels: { [key: string]: string } = {};
+            for (const labelId of note.labelIds) {
+                const label = await localStorage.getLabel(labelId);
+                if (label) {
+                    fetchedLabels[labelId] = label.label;
+                }
+            }
+            setLabels(fetchedLabels);
+        };
+
+        fetchNoteAndLabels();
+    }, [note]);
+
     return (
-        <Link href={`/edit-note/${note.id}`} asChild>
-            <TouchableOpacity style={styles.item} onPress={onPress}>
-                <Text style={styles.itemText}>{note.content}</Text>
-            </TouchableOpacity>
-        </Link>
+        <TouchableOpacity style={styles.item} onPress={onPress}>
+            <View
+                style={{
+                    flex: 1,
+                    alignContent: "space-between",
+                    flexDirection: "row",
+                }}
+            >
+                <View
+                    style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        alignItems: "center",
+                    }}
+                >
+                    <ColorItem color={note.color}></ColorItem>
+                    <Text>{formatTimeDuration(note.createAt)}</Text>
+                </View>
+
+                {note.isBookmarked && (
+                    <Ionicons name="bookmark" size={24} color="black" />
+                )}
+            </View>
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {note.labelIds
+                    .filter((labelId: string) => labels[labelId])
+                    .map((labelId: string) => (
+                        <LabelItem
+                            style={{ marginTop: 0 }}
+                            key={labelId}
+                            label={labels[labelId]}
+                            onPress={() => {}}
+                        ></LabelItem>
+                    ))}
+            </ScrollView>
+            <Text style={styles.itemText}>{note.content}</Text>
+        </TouchableOpacity>
     );
 };
 
@@ -29,6 +89,14 @@ const styles = StyleSheet.create({
     },
     itemText: {
         fontSize: 16,
+        margin: 15,
+        marginStart: 0,
+    },
+    color: {
+        height: 16,
+        width: 16,
+        borderRadius: 8,
+        margin: 5,
     },
 });
 
