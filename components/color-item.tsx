@@ -18,10 +18,23 @@ const ColorItem: React.FC<PropsWithChildren & ColorItemProps> = ({
             onPress={onPress}
             style={[
                 styles.colorCircle,
-                color == null ? { borderWidth: 1 } : { backgroundColor: color },
+                color == null
+                    ? { borderWidth: 2, borderColor: "#dedede" }
+                    : { backgroundColor: color },
                 { width: size, height: size, borderRadius: size / 2 },
             ]}
         >
+            {color == null && (
+                <View
+                    style={{
+                        borderTopWidth: 2,
+                        width: size,
+                        transform: [{ rotate: "60deg" }],
+                        position: "absolute",
+                        borderColor: "#dedede",
+                    }}
+                ></View>
+            )}
             {children}
         </TouchableOpacity>
     );

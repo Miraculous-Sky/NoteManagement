@@ -75,7 +75,9 @@ const ManageNoteScreen = () => {
 
     const renderNoteItem = ({ item }: { item: Note }) => (
         <TouchableOpacity
-            //onPress={() => router.navigate(`/${item.id}`)}
+            onPress={() => {
+                router.navigate(`/${item.id}`);
+            }}
             style={styles.noteItem}
         >
             <Text>{item.content}</Text>

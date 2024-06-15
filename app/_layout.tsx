@@ -1,39 +1,31 @@
+import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Drawer } from "expo-router/drawer";
 
 export default function Layout() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <Drawer>
-                <Drawer.Screen
-                    name="(notes)"
-                    options={{
-                        drawerLabel: "Home",
-                        title: "Notes",
-                    }}
-                />
-                <Drawer.Screen
-                    name="labels"
-                    options={{
-                        drawerLabel: "Labels",
-                        title: "Labels",
-                    }}
-                />
-                <Drawer.Screen
-                    name="folders"
-                    options={{
-                        drawerLabel: "Folders",
-                        title: "Folders",
-                    }}
-                />
-                <Drawer.Screen
-                    name="trash"
-                    options={{
-                        drawerLabel: "Trash",
-                        title: "Trash",
-                    }}
-                />
-            </Drawer>
+            <Stack>
+                <Stack.Screen
+                    name="(drawer)"
+                    options={{ headerShown: false }}
+                ></Stack.Screen>
+                <Stack.Screen
+                    name="[id]"
+                    options={{ title: "Note" }}
+                ></Stack.Screen>
+                <Stack.Screen
+                    name="add"
+                    options={{ title: "Add Note" }}
+                ></Stack.Screen>
+                <Stack.Screen
+                    name="manage-labels"
+                    options={{ title: "Manage Labels" }}
+                ></Stack.Screen>
+                <Stack.Screen
+                    name="manage-note"
+                    options={{ title: "Manage Note" }}
+                ></Stack.Screen>
+            </Stack>
         </GestureHandlerRootView>
     );
 }

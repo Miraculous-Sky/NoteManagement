@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Note from "@/models/note";
 import { formatTimeDuration } from "@/utils/date-utils";
+import { colourNameToHex } from "@/utils/color-utils";
 import { Ionicons } from "@expo/vector-icons";
 import localStorage from "@/data/local-storage";
 import LabelItem from "./label-item";
@@ -37,7 +38,17 @@ const NoteItem: React.FC<NoteItemProps> = ({ note, onPress }) => {
     }, [note]);
 
     return (
-        <TouchableOpacity style={styles.item} onPress={onPress}>
+        <TouchableOpacity
+            style={[
+                styles.item,
+                {
+                    backgroundColor: note.color
+                        ? colourNameToHex(note.color) + "5f"
+                        : "white",
+                },
+            ]}
+            onPress={onPress}
+        >
             <View
                 style={{
                     flex: 1,
